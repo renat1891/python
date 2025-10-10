@@ -1,0 +1,20 @@
+# from turtle import*
+# speed(1)
+# begin_fill()
+# fillcolor('yellow')
+# goto(100, 0)
+# goto(100, 50)
+# goto(0, 50)
+# goto(0, 0)
+# end_fill()
+
+# goto(0, 50)
+# begin_fill()
+# fillcolor('blue')
+# goto(100, 50)
+# goto(100, 100)
+# goto(0, 100)
+# goto(0, 50)
+# end_fill()
+
+# mainloop()
