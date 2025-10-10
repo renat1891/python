@@ -1,0 +1,5 @@
+s1 = set("python")
+s2 = set("Ponyth")
+print(s1)
+print(s2)
+print(s1 == s2)
