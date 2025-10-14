@@ -97,11 +97,11 @@ def update():
     player.move()
     player.update_blink()
 
-    for s in stars:
-        s.fall()
-        if player.colliderect(s):
+    for star in stars:
+        star.fall()
+        if player.colliderect(star):
             game.score += 1
-            s.off_screen()
+            star.off_screen()
             playsound('.\sounds\collect.mp3', block=False)
 
     for b in bombs:

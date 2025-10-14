@@ -35,25 +35,20 @@ class Car(Actor):
         if game.game_over:
             return
 
-        
         if keyboard.left:
             self.angle += 3
         if keyboard.right:
             self.angle -= 3
-
         
         self.x += self.speed * -sin(radians(self.angle))
         self.y += self.speed * -cos(radians(self.angle))
-
         
         if self.x < 0 or self.x > WIDTH or self.y < 0 or self.y > HEIGHT:
             self.respawn()
-
         
         self.trail.append((self.x, self.y))
         if len(self.trail) > 100:
             self.trail.pop(0)
-
         
         if time.time() < self.respawn_time + self.blink_duration:
             if int((time.time() - self.respawn_time) / self.blink_interval) % 2 == 0:
