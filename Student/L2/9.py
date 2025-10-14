@@ -1,6 +1,8 @@
 
 import pgzrun
 import random
+from playsound3 import playsound
+
 
 WIDTH = 800
 HEIGHT = 600
@@ -12,6 +14,7 @@ class Game:
         self.lives = 3
         self.game_over = False
         self.win = False
+        playsound("./sounds/background.mp3", block=False)
 
     def draw_hud(self):
         screen.draw.text(f"Score: {self.score}", (20, 20), color="white", fontsize=36)
@@ -99,6 +102,7 @@ def update():
         if player.colliderect(s):
             game.score += 1
             s.off_screen()
+            playsound('.\sounds\collect.mp3', block=False)
 
     for b in bombs:
         b.fall()
