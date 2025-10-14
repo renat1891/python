@@ -24,8 +24,9 @@ class Bird(Actor):
     
     def move(self):
         if keyboard.space:
-            self.y -= 40
-            self.space_pressed = True
+            if not self.space_pressed:
+                self.y -= 40
+                self.space_pressed = True
         else:
             self.space_pressed = False
         self.y += 2
