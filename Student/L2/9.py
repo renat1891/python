@@ -1,127 +1,170 @@
-
 import pgzrun
 import random
 from playsound3 import playsound
 
+WIDTH = 960
+HEIGHT = 540
 
-WIDTH = 800
-HEIGHT = 600
-
-
+# --- Клас гри ---
 class Game:
     def __init__(self):
         self.score = 0
-        self.lives = 3
         self.game_over = False
-        self.win = False
-        playsound("./sounds/background.mp3", block=False)
 
-    def draw_hud(self):
-        screen.draw.text(f"Score: {self.score}", (20, 20), color="white", fontsize=36)
-        screen.draw.text(f"Lives: {self.lives}", (20, 60), color="red", fontsize=36)
-        if self.game_over:
-            screen.draw.text("GAME OVER", center=(WIDTH//2, HEIGHT//2), color="yellow", fontsize=80)
-        elif self.win:
-            screen.draw.text("YOU WIN!", center=(WIDTH//2, HEIGHT//2), color="green", fontsize=80)
-
-
-class Player(Actor):
-    def __init__(self, x, y):
-        super().__init__("stone", (x, y))
-        self.speed = 7
-        self.blink_timer = 0      
-        self.visible = True       
-
-    def move(self):
-        if keyboard.left:
-            self.x -= self.speed
-        if keyboard.right:
-            self.x += self.speed
-        self.x = max(40, min(WIDTH - 40, self.x))
-
-    def start_blink(self):
-        self.blink_timer = 60  
-
-    def update_blink(self):
-        if self.blink_timer > 0:
-            self.blink_timer -= 1
-            if self.blink_timer % 5 == 0:
-                self.visible = not self.visible
-        else:
-            self.visible = True
+    def reset(self):
+        self.score = 0
+        self.game_over = False
 
     def draw(self):
-        if self.visible:
-            super().draw()
+        screen.draw.text(f"Score: {self.score}", (20, 20), color="white", fontsize=36)
+        if self.game_over:
+            screen.draw.text("GAME OVER", center=(WIDTH // 2, HEIGHT // 2 - 20), color="yellow", fontsize=60)
+            screen.draw.text("Press SPACE to restart", center=(WIDTH // 2, HEIGHT // 2 + 40), color="white", fontsize=30)
 
+# --- Клас платформи ---
+class Platform(Actor):
+    def __init__(self, image, x, y, w):
+        super().__init__(image, (x + w / 2, y + 20))
+        self.x = x
+        self.y = y
+        self.width = w
+        self.height = 40
+        self._surf = pygame.transform.scale(self._surf, (self.width, self.height))
 
-class Falling(Actor):
-    def __init__(self, image, speed_min, speed_max):
-        super().__init__(image, (random.randint(40, WIDTH - 40), -50))
-        self.speed = random.randint(speed_min, speed_max)
+# --- Клас монетки ---
+class Coin(Actor):
+    def __init__(self, x, y):
+        super().__init__("coin", (x, y))
+        self.collected = False
 
-    def fall(self):
-        self.y += self.speed
+# --- Клас гравця ---
+class Player(Actor):
+    def __init__(self, x, y):
+        super().__init__("bird", (x, y))
+        self.vx = 0
+        self.vy = 0
+        self.on_ground = False
+        self.space_pressed = False
+
+    def move(self, dt):
+        speed = 250
+        gravity = 900
+        jump_speed = -520
+
+        # Рух на стрілки
+        if keyboard.left:
+            self.vx = -speed
+        elif keyboard.right:
+            self.vx = speed
+        else:
+            self.vx = 0
+
+        # Стрибок на пробіл
+        if keyboard.space and self.on_ground and not self.space_pressed:
+            self.vy = jump_speed
+            self.on_ground = False
+            self.space_pressed = True
+            # playsound('.\\sounds2\\jump.mp3', block=False)
+        elif not keyboard.space:
+            self.space_pressed = False
+
+        # Гравітація
+        self.vy += gravity * dt
+        if self.vy > 900:
+            self.vy = 900
+
+        # Рух
+        self.x += self.vx * dt
+        self.y += self.vy * dt
+
+        # Межі екрана
+        if self.x < 0:
+            self.x = 0
+        if self.x > WIDTH:
+            self.x = WIDTH
+
+        # Колізії з платформами
+        self.on_ground = False
+        for plat in platforms:
+            if (self.x + self.width / 2 > plat.x and self.x - self.width / 2 < plat.x + plat.width and
+                self.y + self.height / 2 > plat.y and self.y + self.height / 2 < plat.y + 20 and
+                self.vy >= 0):
+                self.y = plat.y - self.height / 2
+                self.vy = 0
+                self.on_ground = True
+
+        # Якщо впав — гра закінчується
         if self.y > HEIGHT:
-            self.off_screen()
+            game.game_over = True
 
-    def off_screen(self):
-        self.y = -50
-        self.x = random.randint(40, WIDTH - 40)
-
-
+# --- Ініціалізація ---
 game = Game()
-player = Player(WIDTH // 2, HEIGHT - 50)
+player = Player(100, 300)
 
-stars = [Falling("coin", 2, 4) for _ in range(3)]
-bombs = [Falling("bomb", 4, 6) for _ in range(2)]
-hearts = [Falling("heart", 2, 4) for _ in range(1)]
+# --- Генерація платформ ---
+def spawn_platforms():
+    platforms = []
+    # нижня "земля"
+    platforms.append(Platform("stone", 0, HEIGHT - 60, WIDTH))
 
+    # випадкові платформи вище
+    for _ in range(5):
+        w = random.randint(150, 300)               # ширина платформи
+        x = random.randint(0, WIDTH - w)           # позиція по X
+        y = random.randint(120, HEIGHT - 150)      # позиція по Y
+        platforms.append(Platform("stone", x, y, w))
+    return platforms
 
+platforms = spawn_platforms()
+
+# --- Монетка ---
+coin = None
+
+def spawn_coin():
+    """Створює монетку на випадковій платформі"""
+    global coin
+    plat = random.choice(platforms)
+    x = random.randint(plat.x + 30, plat.x + plat.width - 30)
+    y = plat.y - 40
+    coin = Coin(x, y)
+
+spawn_coin()
+
+# --- Малювання ---
 def draw():
-    screen.fill((10, 20, 40))
+    screen.blit("bg", (0, 0))
+    for plat in platforms:
+        plat.draw()
+    if coin and not coin.collected:
+        coin.draw()
     player.draw()
-    for s in stars:
-        s.draw()
-    for b in bombs:
-        b.draw()
-    for h in hearts:
-        h.draw()
-    game.draw_hud()
+    game.draw()
 
-
-def update():
-    if game.game_over or game.win:
+# --- Оновлення ---
+def update(dt):
+    global coin
+    if game.game_over:
+        if keyboard.space:
+            restart_game()
         return
 
-    player.move()
-    player.update_blink()
+    player.move(dt)
 
-    for star in stars:
-        star.fall()
-        if player.colliderect(star):
-            game.score += 1
-            star.off_screen()
-            playsound('.\sounds\collect.mp3', block=False)
+    # Збір монетки
+    if coin and not coin.collected and player.colliderect(coin):
+        coin.collected = True
+        game.score += 1
+        # playsound('.\\sounds2\\collect.mp3', block=False)
+        spawn_coin()  # спавнимо нову монету одразу після збору
 
-    for b in bombs:
-        b.fall()
-        if player.colliderect(b):
-            game.lives -= 1
-            b.off_screen()
-
-    for h in hearts:
-        h.fall()
-        if player.colliderect(h):
-            game.lives += 1
-            h.off_screen()
-            player.start_blink()  
-
-    if game.lives <= 0:
-        game.game_over = True
-
-    if game.score >= 10:
-        game.win = True
-
+# --- Рестарт ---
+def restart_game():
+    global platforms
+    game.reset()
+    player.x, player.y = 100, 300
+    player.vx, player.vy = 0, 0
+    player.on_ground = False
+    platforms = spawn_platforms()  # нові випадкові платформи
+    spawn_coin()
 
 pgzrun.go()

@@ -1,6 +1,7 @@
     
 import pgzrun
 import random
+from playsound3 import playsound
 
 WIDTH = 288
 HEIGHT = 512
@@ -36,7 +37,6 @@ class Bird(Actor):
             self.space_pressed = True
             self.image_index = (self.image_index + 1) % len(self.images)
             self.image = self.images[self.image_index]
-            self.angle = -45
         elif not keyboard.space:
             self.space_pressed = False
         self.vy += 0.25
@@ -45,7 +45,7 @@ class Bird(Actor):
 
         if self.y == 0 or self.y == HEIGHT - 20:
             self.vy = 0
-        self.angle += 2 if self.vy > 0 else -2
+        self.angle += 10 if self.vy < 0 else -10
         self.angle = max(-45, min(self.angle, 45))
 
 
@@ -56,9 +56,9 @@ class PipePair:
         self.reset()
 
     def reset(self):
-        self.gap_y = random.randint(150, 350)
+        self.gap_y = random.randint(350 , 450)
         self.top = Actor("pipe-top", (self.x, self.gap_y - 200))
-        self.bottom = Actor("pipe-down", (self.x, self.gap_y + 200))
+        self.bottom = Actor("pipe-down", (self.x, self.gap_y + 300))
         self.passed = False
 
     def move(self):
@@ -98,9 +98,10 @@ def update():
         if not pipe.passed and pipe.x + pipe.top.width/2 < bird.x:
             pipe.passed = True
             game.score += 1
+            playsound('.\sounds2\collect.mp3', block=False)
 
     if bird.y >= HEIGHT - 20:
-        game.game_over = True
+        game.game_over = True 
 
 def restart_game():
     game.reset()
