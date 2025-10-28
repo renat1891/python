@@ -8,9 +8,12 @@ set_default_color_theme("blue")
 window = CTk()
 window.title("Calculator")
 window.geometry("400x500")
+window.columnconfigure((0, 1, 2, 3), weight=1)
+window.rowconfigure(0, weight=3)
+window.rowconfigure(( 1, 2, 3, 4, 5), weight=1)
 
 entry = CTkEntry(window, width=360, height=50, font=("Arial", 22), justify="right")
-entry.grid(row=0, column=0, columnspan=4, padx=20, pady=20)
+entry.grid(row=0, column=0, columnspan=4, sticky="ewsn", padx=20, pady=10)
 
 def add_to_entry(value):
     entry.insert("end", value)
@@ -40,20 +43,20 @@ buttons = [
 
 for (text, r, c) in buttons:
     CTkButton(window, text=text, width=80, height=60, font=("Arial", 20),
-              command=lambda t=text: add_to_entry(t)).grid(row=r, column=c, padx=5, pady=5)
+              command=lambda t=text: add_to_entry(t)).grid(row=r, column=c, padx=5, pady=5, sticky="nsew")
 
 ops = [("+", 1), ("-", 2), ("/", 3), ("*", 4)]
 for (op, r) in ops:
     CTkButton(window, text=op, width=80, height=60, font=("Arial", 20),
               fg_color="#ff4f81", hover_color="#ff6b9c",
-              command=lambda o=op: add_to_entry(o)).grid(row=r, column=3, padx=5, pady=5)
+              command=lambda o=op: add_to_entry(o)).grid(row=r, column=3, padx=5, pady=5, sticky="nsew")
 
 CTkButton(window, text="=", width=80, height=60, font=("Arial", 20),
           fg_color="#1e88e5", hover_color="#42a5f5",
-          command=calculate).grid(row=4, column=1, padx=5, pady=5)
+          command=calculate).grid(row=4, column=1, padx=5, pady=5, sticky="nsew")
 
 CTkButton(window, text="clear", width=80, height=60, font=("Arial", 20),
           fg_color="#1e88e5", hover_color="#42a5f5",
-          command=clear_entry).grid(row=4, column=2, padx=5, pady=5)
+          command=clear_entry).grid(row=4, column=2, padx=5, pady=5, sticky="nsew")
 
 window.mainloop()
