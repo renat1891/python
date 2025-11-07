@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import requests
 
 window = Tk()
 window.title("Конвертер валют")
@@ -7,6 +8,14 @@ window.geometry("250x250")
 
 USD = 36.6
 EUR = 40.5
+def get_course():
+    global USD, EUR
+    link = "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5"
+
+    response = requests.get(link)  
+    data = response.json()
+    EUR = float(data[0]["buy"])
+    USD = float(data[1]["buy"])
 
 def convert():
     text = entry.get()
@@ -39,6 +48,7 @@ Label(window, text="Курс євро: 40.5").place(x=40, y=90)
 Label(window, text="Введіть суму у валюті:").place(x=40, y=120)
 entry = Entry(window)
 entry.place(x=60, y=140)
+Button(window, text="Оновити курс", command=get_course).place(x=90, y=190)
 
 Button(window, text="Конвертувати", command=convert).place(x=70, y=170)
 
