@@ -5,6 +5,7 @@ import customtkinter as ctk
 def translate_text():
     user_text = input_field.get("1.0", "end").strip()
     target_lang = lang_var.get()
+    print(target_lang)
 
     if not user_text:
         result_label.configure(text="Введіть текст для перекладу.")
@@ -27,7 +28,7 @@ input_label.pack(pady=5)
 input_field = ctk.CTkTextbox(app, height=100)
 input_field.pack(pady=5)
 
-lang_var = ctk.StringVar(value="en")
+lang_var = ctk.StringVar(value="EN-GB")
 lang_label = ctk.CTkLabel(app, text="Оберіть мову перекладу:")
 lang_label.pack(pady=5)
 lang_menu = ctk.CTkOptionMenu(app, variable=lang_var, values=["EN-GB", "DE"],
