@@ -28,7 +28,7 @@ def get_autoria_list(query):
     response = requests.get(link, headers=headers)
     soup = BeautifulSoup(response.text, "lxml")
 
-    items = soup.find_all("section", class_="ticket-item")
+    items = soup.find_all("section", class_="product-card")
     results = []
 
     for item in items:
