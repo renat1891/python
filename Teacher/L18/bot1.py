@@ -11,3 +11,6 @@ url_photo = f'https://api.telegram.org/bot{TOKEN}/sendPhoto?chat_id={chanel_id}&
 
 response = requests.get(url_photo)
 print(response.json())
+
+
+
