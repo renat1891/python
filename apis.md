@@ -1,0 +1,2 @@
+https://api.binance.com/api/v3/ticker/price - всі ціни торгівлі для всіх символів.
+https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT - ціна торгівлі для конкретного символу (наприклад, BTCUSDT).
