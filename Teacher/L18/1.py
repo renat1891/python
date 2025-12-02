@@ -15,12 +15,15 @@ soup = BeautifulSoup(response.text, "lxml")
 
 items = soup.find_all("a", class_="product-card")[0]
 
+img = items.find("img").get("src")
 
-title = items.find("div", class_="titleS").text
-print(title)
+print(img)
+
+# title = items.find("div", class_="titleS").text
+# print(title)
 
 # print(items.text)
 
 
 
-
+# BTC
