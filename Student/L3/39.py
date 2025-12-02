@@ -3,24 +3,25 @@ import time
 from bs4 import BeautifulSoup
 
 
-def send_telegram(price, drop):
-    print("send telegram")
-    TOKEN = "7756054942:AAHLVoZWAym72hYuebqTymYuPz8hgBkHd_U"
-    channel_id = "-1003275784278"
+# def send_telegram(price, drop):
+#     TOKEN = "756054942:AAHLVoZWAym72hYuebqTymYuPz8hgBkHd_U"
+#     channel_id = "-1003275784278"
 
-    binance_link = "https://www.binance.com/en/trade/BTC_USDT"
+#     binance_link = "https://www.binance.com/en/trade/BTC_USDT"
 
-    text = (
-        f"📉 BTC впав на <b>${drop}</b>!\n\n"
-        f"<span class=\"tg-spoiler\">Поточна ціна: ${price}</span>\n\n"
-        f"<a href='{binance_link}'>Посилання на Binance</a>"
-    )
+#     text = (
+#         f"📉 BTC впав на <b>${drop}</b>!\n\n"
+#         f"<span class=\"tg-spoiler\">Поточна ціна: ${price}</span>\n\n"
+#         f"<a href='{binance_link}'>Посилання на Binance</a>"
+#     )
 
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={channel_id}&text={text}&parse_mode=HTML"
+#     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
-    response = requests.get(url)
-
-    # print(response.json())
+#     requests.post(url, data={
+#         "chat_id": channel_id,
+#         "text": text,
+#         "parse_mode": "HTML"
+#     })
 
 
 def get_btc_price_binance():
