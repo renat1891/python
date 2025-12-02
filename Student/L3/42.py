@@ -1,19 +1,9 @@
 import requests
 import time
 
-def send_telegram(price, drop, direction):
+def send_telegram(text):
     TOKEN = "7756054942:AAHLVoZWAym72hYuebqTymYuPz8hgBkHd_U"
     channel_id = "-1003275784278"
-
-    binance_link = "https://www.binance.com/en/trade/BTC_USDT"
-
-    emoji = "📉" if direction == "впав" else "📈"
-
-    text = (
-        f"{emoji} BTC {direction} на <b>${abs(drop)}</b>!\n\n"
-        f"Поточна ціна: <b>${price}</b>\n\n"
-        f"<a href='{binance_link}'>Посилання на Binance</a>"
-    )
 
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
@@ -42,7 +32,7 @@ print("Старт моніторингу BTC з Binance...")
 last_price = get_btc_price_binance()
 print(f"Початкова ціна: ${last_price}")
 
-THRESHOLD = 10
+THRESHOLD = 100
 
 while True:
     time.sleep(10)
@@ -50,22 +40,16 @@ while True:
     price = get_btc_price_binance()
     if price is None:
         continue
-
+    print("BTC now: ", price)
     diff = price - last_price
-
-    if price % 10 == 0:
+    
+    if abs(diff) > THRESHOLD:
         if diff < 0:
-            print(f"🔴 BTC: ${price} (−{abs(diff)})")
+            text = f"🔴 BTC: ${price} (−{abs(diff)})"
+            direction = "впав"
         elif diff > 0:
-            print(f"🟢 BTC: ${price} (+{diff})")
-
-    drop = last_price - price
-
-    direction = "впав" if diff < 0 else "піднявся"
-
-    if (price % 10 == 0) and (abs(drop) >= THRESHOLD):
-        send_telegram(price, drop, direction)
-        last_price = price
-
-    if price > last_price:
+            text = f"🟢 BTC: ${price} (+{diff})"
+            direction = "піднявся"
+        print(text)
+        send_telegram(text)
         last_price = price
