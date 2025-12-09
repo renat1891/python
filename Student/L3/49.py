@@ -1,0 +1,60 @@
+import requests
+import time
+
+
+def send_telegram(text):
+    TOKEN = "PUT_NEW_TOKEN_HERE"
+    channel_id = "-1003275784278"
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    requests.post(url, data={"chat_id": channel_id, "text": text})
+
+
+def get_btc_price_binance():
+    try:
+        r = requests.get(
+            "https://api.binance.com/api/v3/ticker/price",
+            params={"symbol": "BTCUSDT"},
+            timeout=10
+        )
+        return float(r.json()["price"])
+    except:
+        return None
+
+
+def round_up_100(n):
+    return int(n + 99) // 100 * 100
+
+def round_down_100(n):
+    return int(n) // 100 * 100
+
+
+print("Старт моніторингу BTC...")
+
+price = get_btc_price_binance()
+if price is None:
+    print("Помилка отримання ціни")
+    exit()
+
+level = round_down_100(price)
+print(f"Початкова ціна: {price} → рівень: {level}")
+
+while True:
+    time.sleep(10)
+
+    price = get_btc_price_binance()
+    if price is None:
+        continue
+
+    print(f"BTC: {price} | рівень: {level}")
+
+    if price >= level + 100:
+        new_level = round_up_100(price)
+        send_telegram(f"🟢 BTC піднявся → {new_level}")
+        level = new_level
+        continue
+
+    if price <= level - 100:
+        new_level = round_down_100(price)
+        send_telegram(f"🔴 BTC впав → {new_level}")
+        level = new_level
+        continue

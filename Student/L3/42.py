@@ -40,16 +40,17 @@ while True:
     price = get_btc_price_binance()
     if price is None:
         continue
+
     print("BTC now: ", price)
+
     diff = price - last_price
-    
-    if abs(diff) > THRESHOLD:
+
+    if price % 100 == 0 and abs(diff) >= THRESHOLD:
         if diff < 0:
             text = f"🔴 BTC: ${price} (−{abs(diff)})"
-            direction = "впав"
-        elif diff > 0:
+        else:
             text = f"🟢 BTC: ${price} (+{diff})"
-            direction = "піднявся"
+
         print(text)
         send_telegram(text)
         last_price = price
