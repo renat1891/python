@@ -20,13 +20,8 @@ def get_btc_price_binance():
     except:
         return None
 
-
-def round_up_100(n):
-    return int(n + 99) // 100 * 100
-
-def round_down_100(n):
-    return int(n) // 100 * 100
-
+def round_to(price, n=100):
+    return round(price/n) *n
 
 print("Старт моніторингу BTC...")
 
@@ -35,26 +30,26 @@ if price is None:
     print("Помилка отримання ціни")
     exit()
 
-level = round_down_100(price)
+round_price = 10
+
+level = round_to(price, round_price)
 print(f"Початкова ціна: {price} → рівень: {level}")
 
 while True:
-    time.sleep(10)
+    time.sleep(3)
+
 
     price = get_btc_price_binance()
     if price is None:
         continue
 
-    print(f"BTC: {price} | рівень: {level}")
-
-    if price >= level + 100:
-        new_level = round_up_100(price)
+    if price >= level + round_price:
+        new_level = round_to(price, round_price)
         send_telegram(f"🟢 BTC піднявся → {new_level}")
         level = new_level
-        continue
-
-    if price <= level - 100:
-        new_level = round_down_100(price)
+    elif price <= level - round_price:
+        new_level = round_to(price, round_price)
         send_telegram(f"🔴 BTC впав → {new_level}")
         level = new_level
-        continue
+
+    print(f"BTC: {price} | рівень: {level}")
