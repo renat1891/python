@@ -26,6 +26,7 @@ async def cmd_start(message: types.Message):
 
 @dp.message()
 async def cmd_start(message: types.Message):
+    
     if message.text.lower() == "1":
         await message.answer("January")
     elif message.text.lower() == "2":
