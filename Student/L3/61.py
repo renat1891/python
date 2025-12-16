@@ -7,22 +7,22 @@ import random
 bot = Bot(token="7756054942:AAHLVoZWAym72hYuebqTymYuPz8hgBkHd_U")
 dp = Dispatcher()
 
+kb1 = [
+    [types.KeyboardButton(text="Нова гра"), types.KeyboardButton(text="Здаюсь")],
+]
+
+keyboard = types.ReplyKeyboardMarkup(keyboard=kb1, resize_keyboard=True)
+
 @dp.message(Command("start"))
 async def start(message: types.Message):
     await message.answer("Я загадаю число і тобі треба буде його відгадати", reply_markup=keyboard)
     await gen_magic_num(message)
 
-@dp.message(Command("new_game") or F.text.lower() == "нова гра")
+@dp.message(F.text.lower().strip() == "нова гра" or Command("new_game"))
 async def gen_magic_num(message: types.Message):
     global magic_num
     await message.answer("нова гра почалась")
     magic_num = random.randint(1, 100)
-
-kb1 = [
-    [types.KeyboardButton(text="Нова гра"), types.KeyboardButton(text="Здаюсь")],
-    ]
-
-keyboard = types.ReplyKeyboardMarkup(keyboard=kb1, resize_keyboard=True)
 
 @dp.message(F.text.lower() == "здаюсь")
 async def guess(message: types.Message):
@@ -30,6 +30,7 @@ async def guess(message: types.Message):
 
 @dp.message()
 async def guess(message: types.Message):
+    print("Received message:", message.text)
     text = message.text.lower()
     if not text.isdigit():
         await message.answer("Я вас не розумію")
@@ -45,6 +46,7 @@ async def guess(message: types.Message):
 
 
 async def main():
+    print("Bot started")
     await dp.start_polling(bot)
 
 
