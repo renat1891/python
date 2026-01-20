@@ -147,3 +147,9 @@ class BankDB:
         self.conn.commit()
 
         return "Переказ виконано"
+
+
+# Мови(англ, німецька)
+# спорт
+# 
+
