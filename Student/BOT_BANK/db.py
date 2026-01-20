@@ -1,9 +1,3 @@
-
-            
-        
-    
-
-
 import sqlite3
 import time
 import math
