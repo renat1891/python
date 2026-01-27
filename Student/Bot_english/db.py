@@ -24,6 +24,7 @@ class DB():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER,
                 word TEXT,
+                translation TEXT,
                 status INTEGER DEFAULT 0
             )
         ''')
@@ -36,10 +37,10 @@ class DB():
     def add_words_for_user(self, user_id): 
         with open(json_path, 'r', encoding='utf-8') as f:
             words = json.load(f)
-        for word in words:
+        for word, translation in words.items():
             self.cursor.execute('''
-                INSERT INTO user_word (user_id, word) VALUES (?, ?)
-            ''', (user_id, word))
+                INSERT INTO user_word (user_id, word, translation) VALUES (?, ?, ?)
+            ''', (user_id, word, translation))
         self.connection.commit()
     def get_user(self, tg_id):
         self.cursor.execute('''
@@ -48,7 +49,7 @@ class DB():
         return self.cursor.fetchone()
     def get_random_word(self, user_id):
         self.cursor.execute('''
-            SELECT id, word, status FROM user_word 
+            SELECT id, word, translation, status FROM user_word 
             WHERE user_id=? AND status=0 
             ORDER BY RANDOM() LIMIT 1
         ''', (user_id,))
@@ -60,6 +61,18 @@ class DB():
         ''', (status, word_id, user_id))
         self.connection.commit()
 
+    def stats_user(self, user_id):
+        self.cursor.execute('''
+            SELECT COUNT(*) FROM user_word 
+            WHERE user_id=? AND status=1
+        ''', (user_id,))
+        learned_count = self.cursor.fetchone()[0]
+        self.cursor.execute('''
+            SELECT COUNT(*) FROM user_word 
+            WHERE user_id=?
+        ''', (user_id,))
+        total_count = self.cursor.fetchone()[0]
+        return learned_count, total_count
 
 
 
