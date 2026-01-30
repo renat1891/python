@@ -3,32 +3,42 @@ import subprocess
 import sys
 import os
 
-set_appearance_mode("dark")
-set_default_color_theme("blue")
+class GameMenuApp:
+    def __init__(self):
+        set_appearance_mode("dark")
+        set_default_color_theme("blue")
 
-app = CTk()
-app.title(" Game Menu")
-app.geometry("500x500")
+        self.app = CTk()
+        self.app.title(" Game Menu")
+        self.app.geometry("500x500")
 
-main_frame = CTkFrame(app)
-main_frame.pack(fill="both", expand=True)
+        self.main_frame = CTkFrame(self.app)
+        self.main_frame.pack(fill="both", expand=True)
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def run_flappy():
-    subprocess.Popen([sys.executable, os.path.join(BASE_DIR, "flappy.py")])
+        self.setup_ui()
 
-def run_platformer():
-    subprocess.Popen([sys.executable, os.path.join(BASE_DIR, "platformer.py")])
+    def setup_ui(self):
+        CTkLabel(self.main_frame, text=" Вибери гру", font=("Arial", 30, "bold")).pack(pady=40)
 
-def run_tictactoe():
-    subprocess.Popen([sys.executable, os.path.join(BASE_DIR, "tictactoe.py")])
+        CTkButton(self.main_frame, text=" Flappy Bird", command=self.run_flappy, width=200, height=50).pack(pady=10)
+        CTkButton(self.main_frame, text=" Платформер", command=self.run_platformer, width=200, height=50).pack(pady=10)
+        CTkButton(self.main_frame, text=" Хрестики-Нулики", command=self.run_tictactoe, width=200, height=50).pack(pady=10)
 
-CTkLabel(main_frame, text=" Вибери гру", font=("Arial", 30, "bold")).pack(pady=40)
+    def run_flappy(self):
+        subprocess.Popen([sys.executable, os.path.join(self.BASE_DIR, "flappy.py")])
 
-CTkButton(main_frame, text=" Flappy Bird", command=run_flappy, width=200, height=50).pack(pady=10)
-CTkButton(main_frame, text=" Платформер", command=run_platformer, width=200, height=50).pack(pady=10)
-CTkButton(main_frame, text=" Хрестики-Нулики", command=run_tictactoe, width=200, height=50).pack(pady=10)
+    def run_platformer(self):
+        subprocess.Popen([sys.executable, os.path.join(self.BASE_DIR, "platformer.py")])
 
-app.mainloop()
+    def run_tictactoe(self):
+        subprocess.Popen([sys.executable, os.path.join(self.BASE_DIR, "tictactoe.py")])
+
+    def run(self):
+        self.app.mainloop()
+
+if __name__ == "__main__":
+    game_menu = GameMenuApp()
+    game_menu.run()
 

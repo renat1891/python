@@ -1,0 +1,96 @@
+import asyncio
+import json
+import random
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from db import DB
+
+TOKEN = "8234958188:AAH2Z3hKExaMOgTI8BbDWp_9UC7mdP-loIo"
+
+bot = Bot(token=TOKEN)
+dp = Dispatcher(bot=bot)
+db = DB()
+
+user_answers = {}
+
+
+def generate_question():
+    countries_data = db.get_countries_data() 
+    country = random.choice(list(countries_data.keys()))
+    correct = countries_data[country]
+
+    wrong = random.sample(
+        [v for v in countries_data.values() if v != correct], 3
+    )
+
+    options = wrong + [correct]
+    random.shuffle(options)
+
+    return country, correct, options
+
+@dp.message(Command("start"))
+async def start(message: types.Message):
+    db.add_user(message.from_user.id)
+    await message.answer("Я вітаю тебе в географічному боті! Використовуй /quiz щоб почати вікторину.")
+
+@dp.message(Command("quiz"))
+async def quiz(message: types.Message):
+    country, correct, options = generate_question()
+
+    user_answers[message.from_user.id] = correct
+
+    buttons = []
+    for opt in options:
+        buttons.append(
+            [InlineKeyboardButton(text=opt, callback_data=f"ans_{opt}")]
+        )
+
+    keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
+
+    await message.answer(
+        f"Яка столиця {country}?",
+        reply_markup=keyboard
+    )
+
+@dp.callback_query(lambda c: c.data.startswith("ans_"))
+async def answer(callback: types.CallbackQuery):
+    user_id = callback.from_user.id
+    chosen = callback.data.replace("ans_", "")
+    correct = user_answers.get(user_id)
+
+    if chosen == correct:
+        db.add_score(user_id, 1)
+        feedback = "Правильно. +1 бал."
+    else:
+        feedback = f"Невірно. Правильна відповідь: {correct}"
+
+
+    country, correct, options = generate_question()
+    user_answers[user_id] = correct
+
+    buttons = []
+    for opt in options:
+        buttons.append(
+            [InlineKeyboardButton(text=opt, callback_data=f"ans_{opt}")]
+        )
+
+    keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
+
+    
+    await callback.message.edit_text(
+        f"{feedback}\n\nЯка столиця {country}?",
+        reply_markup=keyboard
+    )
+    await callback.answer()
+
+@dp.message(Command("score"))
+async def score(message: types.Message):
+    s = db.get_score(message.from_user.id)
+    await message.answer(f"Ваш рахунок: {s}")
+
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
