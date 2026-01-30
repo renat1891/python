@@ -31,7 +31,7 @@ def generate_question():
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
-    db.add_user(message.from_user.id)
+    db.add_user(message.from_user.full_name, message.from_user.id)
     await message.answer("Я вітаю тебе в географічному боті! Використовуй /quiz щоб почати вікторину.")
 
 @dp.message(Command("quiz"))
