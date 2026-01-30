@@ -3,7 +3,6 @@ import json
 import random
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from db import DB
 
 TOKEN = "8234958188:AAH2Z3hKExaMOgTI8BbDWp_9UC7mdP-loIo"
@@ -12,8 +11,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot)
 db = DB()
 
-user_answers = {}
-
+id_channel = -1003823650090
 
 def generate_question():
     countries_data = db.get_countries_data() 
@@ -38,56 +36,17 @@ async def start(message: types.Message):
 async def quiz(message: types.Message):
     country, correct, options = generate_question()
 
-    user_answers[message.from_user.id] = correct
-
-    buttons = []
-    for opt in options:
-        buttons.append(
-            [InlineKeyboardButton(text=opt, callback_data=f"ans_{opt}")]
-        )
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
-
-    await message.answer(
-        f"Яка столиця {country}?",
-        reply_markup=keyboard
+    find_correct_id = options.index(correct)
+    await bot.send_poll(
+        chat_id=id_channel,
+        question=f"Яка столиця {country}",
+        options=options,
+        type="quiz",
+        is_anonymous=True,
+        correct_option_id=find_correct_id,
+        explanation=f"Столиця {country} є {correct}"
     )
-
-@dp.callback_query(lambda c: c.data.startswith("ans_"))
-async def answer(callback: types.CallbackQuery):
-    user_id = callback.from_user.id
-    chosen = callback.data.replace("ans_", "")
-    correct = user_answers.get(user_id)
-
-    if chosen == correct:
-        db.add_score(user_id, 1)
-        feedback = "Правильно. +1 бал."
-    else:
-        feedback = f"Невірно. Правильна відповідь: {correct}"
-
-
-    country, correct, options = generate_question()
-    user_answers[user_id] = correct
-
-    buttons = []
-    for opt in options:
-        buttons.append(
-            [InlineKeyboardButton(text=opt, callback_data=f"ans_{opt}")]
-        )
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=buttons)
-
-    
-    await callback.message.edit_text(
-        f"{feedback}\n\nЯка столиця {country}?",
-        reply_markup=keyboard
-    )
-    await callback.answer()
-
-@dp.message(Command("score"))
-async def score(message: types.Message):
-    s = db.get_score(message.from_user.id)
-    await message.answer(f"Ваш рахунок: {s}")
+    await message.answer("Вікторину надіслано в канал!")
 
 async def main():
     await dp.start_polling(bot)
