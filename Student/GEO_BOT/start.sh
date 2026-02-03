@@ -1,1 +1,1 @@
-nohup python3 main_word_bot.py > /dev/null 2>&1 &
+nohup python3 main_bot_geo.py > /dev/null 2>&1 &
