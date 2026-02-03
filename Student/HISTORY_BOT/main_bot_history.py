@@ -13,7 +13,6 @@ dp = Dispatcher(bot=bot)
 db = DB()
 id_channel = -1003823650090
 
-
 def generate_question():
     history_data = db.get_history_data() 
     event = random.choice(list(history_data.keys()))
@@ -52,6 +51,7 @@ async def quiz(message: types.Message):
 
 
 async def main():
+    print("Бот запущено")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
