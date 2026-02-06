@@ -54,7 +54,7 @@ async def send():
 async def time_send():
     while True:
         await send()
-        await asyncio.sleep(20)
+        await asyncio.sleep(10*60*60)  
 
 async def main():
     print("Бот запущено")
