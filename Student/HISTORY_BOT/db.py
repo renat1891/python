@@ -6,7 +6,6 @@ import json
 Base = declarative_base()
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-json_path = os.path.join(current_dir, "countries.json")
 
 class User(Base):
     __tablename__ = 'users'
@@ -24,7 +23,7 @@ class History(Base):
     description = Column(Text, nullable=False)
 
 class DB:
-    def __init__(self, file_name="animaldb.db"):
+    def __init__(self, file_name="history.db"):
         # sqlite файл
         self.engine = create_engine(f"sqlite:///{file_name}", echo=False)
 
@@ -52,29 +51,10 @@ class DB:
                 session.add(User(name=name, tg_id=tg_id))
                 session.commit()
 
-    def add_score(self, tg_id, points):
-        with self.Session() as session:
-            user = session.query(User).filter_by(tg_id=tg_id).first()
-            if user:
-                user.score += points
-                session.commit()
-
-    def get_score(self, tg_id):
-        with self.Session() as session:
-            user = session.query(User).filter_by(tg_id=tg_id).first()
-            return user.score if user else 0
-
     def get_history_data(self):
         with self.Session() as session:
             history = session.query(History).all()
             return {h.event: h.description for h in history}
-
-    def delete_user(self, user_id):
-        with self.Session() as session:
-            user = session.query(User).filter(User.id == user_id).first()
-            if user:
-                session.delete(user)
-                session.commit()
 
     def close(self):
         pass

@@ -11,8 +11,13 @@ def add_food():
 
 def get_all_foods():
     foods = new_db.get_all_foods()
+    # table format
+    print("-"*50)
+    print(f"{'ID':<5} {'Назва':<20} {'Вага':<10} {'Ціна':<10}")
     for food in foods:
-        print(food)
+        print(f"{food.id:<5} {food.name:<20} {food.weight:<10} {food.price:<10}")
+    print("-"*50)
+
 
 def delete_food(food_id):
     food_id = int(input("ID їжі для видалення: "))

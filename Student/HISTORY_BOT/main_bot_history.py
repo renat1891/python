@@ -27,7 +27,6 @@ def generate_question():
 
     return event, correct, options
 
-
 @dp.message(Command("start"))
 async def start(message: types.Message):
     db.add_user(message.from_user.full_name, message.from_user.id)
@@ -35,6 +34,10 @@ async def start(message: types.Message):
 
 @dp.message(Command("quiz"))
 async def quiz(message: types.Message):
+    await send()
+    await message.answer("Вікторину надіслано в канал!")
+
+async def send():
     history, correct, options = generate_question()
 
     find_correct_id = options.index(correct)
@@ -47,11 +50,15 @@ async def quiz(message: types.Message):
         correct_option_id=find_correct_id,
         explanation=f"Подія {history} є {correct}"
     )
-    await message.answer("Вікторину надіслано в канал!")
 
+async def time_send():
+    while True:
+        await send()
+        await asyncio.sleep(20)
 
 async def main():
     print("Бот запущено")
+    asyncio.create_task(time_send())
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

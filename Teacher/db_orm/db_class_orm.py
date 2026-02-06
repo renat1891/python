@@ -21,7 +21,7 @@ class DB:
         # фабрика сесій
         self.Session = sessionmaker(bind=self.engine, autoflush=False, autocommit=False)
 
-    def add_user(self, name: str, age: int):
+    def add_user(self, name: str="", age: int=0):
         new_user = User(name=name, age=age)
         with self.Session() as session:
             session.add(new_user)

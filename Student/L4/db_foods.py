@@ -11,6 +11,9 @@ class Food(Base):
     weight: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     price: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
 
+    def __repr__(self):
+        return f"Food(id={self.id}, name='{self.name}', weight={self.weight}, price={self.price}')"
+
 class DB:
     def __init__(self, file_name="animaldb.db"):
         # sqlite файл
