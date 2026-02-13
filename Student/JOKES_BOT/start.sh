@@ -1,0 +1,1 @@
+nohup python3 main_bot_jokes.py > /dev/null 2>&1 &
