@@ -28,7 +28,10 @@ async def send_joke_to_channel():
     jokes = db.get_all_jokes()
     if jokes:
         random_joke = random.choice(jokes)
-        await bot.send_message(chat_id=id_channel, text=random_joke)
+        try:
+            await bot.send_message(chat_id=id_channel, text=random_joke)
+        except Exception as e:
+            print(f"Помилка надсилання жарта{id_channel}: {e}")
 
 async def scheduled_jokes():
     while True:
