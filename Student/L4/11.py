@@ -26,4 +26,3 @@ b = datetime.now()
 
 print((b-a).days)
 
-
