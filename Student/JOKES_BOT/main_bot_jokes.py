@@ -3,13 +3,14 @@ import random
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from db import DB
+from datetime import datetime
 
 TOKEN = "8323790629:AAHpR9W0bOVbJc89nnIIkgvYuCVUgdiauDU"
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot)
 db = DB()
-id_channel = -1001234567890  
+id_channel = -1003823650090
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
@@ -35,7 +36,7 @@ async def send_joke_to_channel():
 
 async def scheduled_jokes():
     while True:
-        current_hour = int(asyncio.get_event_loop().time() // 3600 % 24)
+        current_hour = datetime.now().hour
         print(current_hour)  
         if 9 <= current_hour <= 21:  
             await send_joke_to_channel()
