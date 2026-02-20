@@ -21,14 +21,24 @@ categories = [
 
 keyboard = ReplyKeyboardMarkup(
     keyboard=[
-        [KeyboardButton(text="Усі Новини")]
-        [KeyboardButton(text="Головне"),
-            KeyboardButton(text="Політика")]
-        [KeyboardButton(text="Економіка"),
-            KeyboardButton(text="Життя")]
-        [KeyboardButton(text="Технології"),
-            KeyboardButton(text="Оборонка")]
-        [KeyboardButton(text="Спорт")]
+        [
+            KeyboardButton(text="Усі Новини")
+        ],
+        [
+            KeyboardButton(text="Головне"),
+            KeyboardButton(text="Політика")
+        ],
+        [
+            KeyboardButton(text="Економіка"),
+            KeyboardButton(text="Життя")
+        ],
+        [
+            KeyboardButton(text="Технології"),
+            KeyboardButton(text="Оборонка")
+        ],
+        [
+            KeyboardButton(text="Спорт")
+        ]
     ],
     resize_keyboard=True
 )
