@@ -15,28 +15,33 @@ BASE_URL = "https://www.pravda.com.ua/news/"
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-categories = [
-    "main","eurointegration","epravda","life","mezha","oboronka","champion"
-]
+categories = {
+    "Усі Новини": "",
+    "Головне": "main",
+    "Політика": "eurointegration",
+    "Економіка": "epravda",
+    "Життя": "life",
+    "Технології": "mezha",
+    "Оборонка": "oboronka",
+    "Спорт": "champion"
+}
 
 keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [
-            KeyboardButton(text="Усі Новини")
-        ],
-        [
+            KeyboardButton(text="Усі Новини"),
             KeyboardButton(text="Головне"),
-            KeyboardButton(text="Політика")
         ],
         [
+            KeyboardButton(text="Політика"),
             KeyboardButton(text="Економіка"),
-            KeyboardButton(text="Життя")
         ],
         [
+            KeyboardButton(text="Життя"),
             KeyboardButton(text="Технології"),
-            KeyboardButton(text="Оборонка")
         ],
         [
+            KeyboardButton(text="Оборонка"),
             KeyboardButton(text="Спорт")
         ]
     ],
