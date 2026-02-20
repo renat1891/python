@@ -5,7 +5,7 @@ import aiohttp
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
+from parsing import get_data_info
 
 TOKEN = "8462311437:AAEsjq9Yol5RFmOq0YGkVZlup1z5jsm4rFw"
 
