@@ -64,10 +64,32 @@ async def send_articles(chat_id, articles):
         )
         await bot.send_message(chat_id, text, parse_mode="HTML")
 
+@dp.message(lambda message: message.text)
+async def get_category(message: types.Message):
+    await message.answer(message.text)
+    param = categories.get(message.text)
+    try:
+        time, title, link = get_data_info(
+            url=BASE_URL,
+            category=param
+        )
+
+        text = (
+            f"<b>{title}</b>\n"
+            f"{time}\n\n"
+            f"{link}"
+        )
+
+        await message.answer(text, parse_mode="HTML")
+
+    except Exception as e:
+        await message.answer("Не вдалося отримати новини")
+        print(e)
+
+
 
 @dp.message(Command("start"))
 async def start_command(message: types.Message):
-    (message.chat.id)
     await message.answer(
         "Welcome!\nSelect a news category:",
         reply_markup=keyboard
