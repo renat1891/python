@@ -6,4 +6,5 @@ import numpy as np
 # print(a[1:3, 1:3])
 # print(a[::2,2])
 
-a = np.array([])
+a = np.full((5,5), 1)
+print(a)
