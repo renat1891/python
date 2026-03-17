@@ -11,6 +11,9 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeybo
 
 
 TOKEN = "8451436590:AAGdBZfo-3XRmnmNv87OBEpdq79dGxbsVd8"
+id_channel = -1003846107439
+
+
 
 regions = {
     "Волинська": "volynskaya",
@@ -91,6 +94,10 @@ async def handle_region(message: types.Message):
         text += f"|{fuel_type:<19}|{data['price']:<8}|{data['change']:<8}|{data['change_percent']}\n"
 
     await message.answer(text+"```", parse_mode="Markdown")
+
+
+
+
 
 async def main():
     print("Bot started...")
