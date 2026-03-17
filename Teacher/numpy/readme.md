@@ -58,6 +58,14 @@ import numpy as np
 # print(a / b)  # поелементне ділення
 # print(a - b)  # поелементне віднімання
 
+# рандом
+# random_array = np.random.rand(3, 3)  # створює 3x3 масив з випадковими числами від 0 до 1
+# print(random_array)
+
+# рандомні цілі числа від 0 до 9 у масиві 4x4
+# random_int_array = np.random.randint(0, 10, (4, 4))
+# print(random_int_array)
+
 b = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 print(b)
 print(b.T)  # транспонування матриці

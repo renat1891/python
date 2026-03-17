@@ -12,12 +12,31 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeybo
 
 TOKEN = "8451436590:AAGdBZfo-3XRmnmNv87OBEpdq79dGxbsVd8"
 
+regions = {
+    "Волинська": "volynskaya",
+    "Рівненська": "rivnenskaya",
+    "Львівська": "lvovskaya",
+    "Тернопільська": "ternopolskaya",
+    "Хмельницька": "hmelitskaya",
+    "Чернівецька": "chernovitskaya",
+    "Івано-Франківська": "ivano-frankovskaya",
+    "Київська": "kievskaya",
+    "Одеська": "odesskaya",
+    "Херсонська": "hersonskaya",
+    "Дніпропетровська": "dnepropetrovskaya",
+    "Донецька": "donetskaya",
+    "Луганська": "luganskaya",
+    "Сумська": "sumskaya",
+    "Полтавська": "poltavskaya",
+    "Житомирська": "zhitomirskaya",
+    "Кіровоградська": "kirovogradskaya",
+    "Вінницька": "vinnitskaya",
+    "Чернігівська": "chernigovskaya",
+    "Запорізька": "zaporozhskaya"
+}
+
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
-
-
-
-
 
 region_keyboard = ReplyKeyboardMarkup(
     keyboard=[
@@ -52,25 +71,26 @@ async def start_command(message: types.Message):
         reply_markup=region_keyboard
     )
 
-
-
 @dp.message()
 async def handle_region(message: types.Message):
     region = message.text
-    fuels = get_data_info(category=region.lower())
+    if region not in regions:
+        await message.answer("Будь ласка, виберіть регіон з клавіатури.")
+        return
+        
+    fuels = get_data_info(category=regions.get(region).lower())
 
     if not fuels:
         await message.answer(f"На жаль, не вдалося отримати дані для {region}.")
         return
+    text = f"__Ціни на пальне в {region}__\n\n"
+    text += f"```{region}\n"
 
-    text = f"Ціни на пальне в {region}:\n\n"
-    text += "Тип       Ціна    Зміна   %\n"
-    text += "-----------------------------\n"
-
+    text += f"|{'Тип':<19}|{'Ціна':<8}|{'Зміна':<8}|%\n"
     for fuel_type, data in fuels.items():
-        text += f"{fuel_type:<10}{data['price']:<8}{data['change']:<8}{data['change_percent']}\n"
+        text += f"|{fuel_type:<19}|{data['price']:<8}|{data['change']:<8}|{data['change_percent']}\n"
 
-    await message.answer(text)
+    await message.answer(text+"```", parse_mode="Markdown")
 
 async def main():
     print("Bot started...")

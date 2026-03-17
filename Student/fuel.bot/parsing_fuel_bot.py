@@ -5,7 +5,7 @@ headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
-def get_data_info(url="https://index.minfin.com.ua/ua/markets/fuel/reg/volynskaya/", category=""):
+def get_data_info(url="https://index.minfin.com.ua/ua/markets/fuel/reg/", category=""):
     r = requests.get(url+category, headers=headers)
     soup = BeautifulSoup(r.text, "lxml")
 
@@ -28,6 +28,6 @@ def get_data_info(url="https://index.minfin.com.ua/ua/markets/fuel/reg/volynskay
 if __name__ == "__main__":
     fuels = get_data_info()
     for fuel_type, data in fuels.items():
-        print(f"{fuel_type}: {data['price']}, {data['change']}, {data['change_percent']}")
+        print(f"{fuel_type:_<10}: {data['price']}, {data['change']}, {data['change_percent']}")
 
     
