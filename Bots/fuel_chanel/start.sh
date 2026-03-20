@@ -1,0 +1,1 @@
+nohup python3 main2_bot_sender.py > /dev/null 2>&1 &
