@@ -1,0 +1,83 @@
+{
+  "subject": "Математика",
+  "topics": [
+    {
+      "name": "Алгебра",
+      "questions": [
+        {
+          "id": 1,
+          "question": "2x + 4 = 10",
+          "options": ["2", "3", "4", "5"],
+          "correct_answer": "3",
+          "explanation": "2x=6 → x=3"
+        },
+        {
+          "id": 4,
+          "question": "Яке значення має вираз (x^2 - 4)/(x - 2) при x=3?",
+          "options": ["5", "7", "9", "11"],
+          "correct_answer": "5",
+          "explanation": "(3^2 - 4)/(3 - 2) = (9 - 4)/1 = 5"
+        },
+        {
+          "id": 7,
+          "question": "Розв'яжіть рівняння: 3x - 7 = 11",
+          "options": ["6", "5", "4", "7"],
+          "correct_answer": "6",
+          "explanation": "3x = 18 → x = 6"
+        }
+      ]
+    },
+    {
+      "name": "Геометрія",
+      "questions": [
+        {
+          "id": 2,
+          "question": "Яка площа круга з радіусом 5?",
+          "options": ["25π", "10π", "5π", "20π"],
+          "correct_answer": "25π",
+          "explanation": "Площа круга = πr² = π*5² = 25π"
+        },
+        {
+          "id": 5,
+          "question": "Яка довжина кола з радіусом 7?",
+          "options": ["14π", "21π", "28π", "35π"],
+          "correct_answer": "14π",
+          "explanation": "Довжина кола = 2πr = 2π*7 = 14π"
+        },
+        {
+          "id": 8,
+          "question": "Яка площа прямокутника зі сторонами 8 і 12?",
+          "options": ["96", "100", "80", "120"],
+          "correct_answer": "96",
+          "explanation": "Площа = довжина × ширина = 8 × 12 = 96"
+        }
+      ]
+    },
+    {
+      "name": "Тригонометрія",
+      "questions": [
+        {
+          "id": 3,
+          "question": "Яке значення sin(30°)?",
+          "options": ["0.5", "0.866", "1", "0"],
+          "correct_answer": "0.5",
+          "explanation": "sin(30°) = 0.5"
+        },
+        {
+          "id": 6,
+          "question": "Яке значення cos(60°)?",
+          "options": ["0.5", "0.866", "1", "0"],
+          "correct_answer": "0.5",
+          "explanation": "cos(60°) = 0.5"
+        },
+        {
+          "id": 9,
+          "question": "Яке значення tan(45°)?",
+          "options": ["1", "0", "0.5", "∞"],
+          "correct_answer": "1",
+          "explanation": "tan(45°) = 1"
+        }
+      ]
+    }
+  ]
+}
