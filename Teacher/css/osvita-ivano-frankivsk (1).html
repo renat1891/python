@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Театр «Усмішка» · Освіта Івано-Франківська</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #fef9f0; color: #1a1a1a; }
+
+.stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.star { position: absolute; border-radius: 50%; animation: twinkle 3s infinite alternate; }
+@keyframes twinkle { 0%{opacity:.15;transform:scale(1)}100%{opacity:.85;transform:scale(1.4)} }
+
+.page { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding-bottom: 3rem; }
+
+/* ГЕРОЙ */
+.hero {
+  background: linear-gradient(135deg, #ff6eb4 0%, #ff9a3c 50%, #ffd93d 100%);
+  padding: 2.2rem 1rem 1.8rem; text-align: center; border-radius: 0 0 32px 32px;
+}
+.hero-emoji { font-size: 56px; display: block; margin-bottom: 8px; }
+.hero h1 { font-size: 26px; font-weight: 800; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.hero p { font-size: 14px; color: rgba(255,255,255,.9); margin-top: 5px; }
+
+/* СЕКЦІЯ */
+.section-header { display: flex; align-items: center; gap: 10px; padding: 1.5rem 1rem 0.6rem; }
+.section-icon { font-size: 30px; }
+.section-title { font-size: 20px; font-weight: 700; }
+.section-subtitle { font-size: 13px; color: #888; margin-top: 2px; }
+
+/* ТЕАТР */
+.theatre-wrap { padding: 0 0.75rem; }
+.theatre-card {
+  background: linear-gradient(135deg, #f9a825 0%, #ff6f00 100%);
+  border-radius: 22px; padding: 22px 20px; color: #fff; position: relative; overflow: hidden;
+}
+.theatre-card::after { content:'🎪'; position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:64px; opacity:.15; }
+.theatre-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.theatre-tagline { font-size: 12px; opacity: .85; margin-bottom: 18px; }
+.theatre-phones { display: flex; flex-direction: column; gap: 10px; }
+.theatre-phone-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.theatre-label { font-size: 12px; opacity: .85; flex: 1; }
+.theatre-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.22); border: 1.5px solid rgba(255,255,255,.5);
+  border-radius: 22px; padding: 7px 16px;
+  color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; transition: background .15s;
+}
+.theatre-btn:hover { background: rgba(255,255,255,.38); }
+.theatre-btn.placeholder { opacity: .5; border-style: dashed; pointer-events: none; }
+.theatre-note {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.3);
+  font-size: 11px; opacity: .8; line-height: 1.8;
+}
+
+/* РОЗДІЛЬНИК */
+.divider { display:flex; align-items:center; gap:10px; padding:.6rem 1rem; color:#ddd; font-size:13px; }
+.divider::before,.divider::after { content:''; flex:1; height:1px; background:#ead8b8; }
+
+/* ПОШУК */
+.search-wrap { padding: .5rem .75rem .25rem; }
+.search-wrap input {
+  width:100%; padding:10px 14px; border:1.5px solid #e8d8c0;
+  border-radius:12px; font-size:15px; background:#fff; color:#1a1a1a; outline:none;
+}
+.search-wrap input:focus { border-color:#ff9a3c; }
+.count { font-size:12px; color:#bbb; padding:4px .75rem 2px; }
+
+/* СПИСОК */
+.list { padding:.4rem .75rem 0; display:flex; flex-direction:column; gap:7px; }
+.card {
+  background:#fff; border:1.5px solid #f0e4cc; border-radius:14px;
+  padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:12px;
+  transition:border-color .15s, transform .1s;
+}
+.card:hover { border-color:#ffb347; transform:translateY(-1px); }
+.card-info { flex:1; min-width:0; }
+.card-name { font-size:13px; font-weight:600; color:#1a1a1a; line-height:1.4; }
+.card-addr { font-size:11px; color:#aaa; margin-top:2px; }
+.card-phone-text { font-size:11px; color:#777; margin-top:2px; }
+.call-btn {
+  flex-shrink:0; width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  text-decoration:none; font-size:19px; transition:transform .12s;
+}
+.call-btn:hover{transform:scale(1.12)} .call-btn:active{transform:scale(.94)}
+.call-btn.green { background:#e8faf0; border:1.5px solid #a8e6c0; }
+.call-btn.blue  { background:#e8f2ff; border:1.5px solid #a8c8f0; }
+.no-phone {
+  flex-shrink:0; width:44px; height:44px; border-radius:50%;
+  background:#f5f2ec; border:1.5px solid #e8e0d0;
+  display:flex; align-items:center; justify-content:center; color:#ccc; font-size:16px;
+}
+.no-results { text-align:center; color:#bbb; font-size:14px; padding:2rem; }
+.footer { text-align:center; font-size:11px; color:#ccc; padding:2rem 1rem 1rem; line-height:1.9; }
+.footer a { color:#ffb347; text-decoration:none; }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="page">
+
+  <div class="hero">
+    <span class="hero-emoji">🎪✨</span>
+    <h1>Театр «Усмішка»</h1>
+    <p>База контактів · Садочки · Школи · Івано-Франківськ</p>
+  </div>
+
+  <!-- ТЕАТР УСМІШКА -->
+  <div class="section-header">
+    <span class="section-icon">🎭</span>
+    <div>
+      <div class="section-title" style="color:#e65100;">Театр «Усмішка»</div>
+      <div class="section-subtitle">Дитячий ляльковий театр — Івано-Франківськ</div>
+    </div>
+  </div>
+
+  <div class="theatre-wrap">
+    <div class="theatre-card">
+      <div class="theatre-name">🎪 Театр «Усмішка»</div>
+      <div class="theatre-tagline">✨ Де кожна дитина — головний глядач!</div>
+      <div class="theatre-phones">
+        <div class="theatre-phone-row">
+          <span class="theatre-label">📞 Замовлення вистав</span>
+          <!-- ЩОБ ДОДАТИ НОМЕР: замінити рядок нижче на:
+               <a class="theatre-btn" href="tel:+380XXXXXXXXX">📞 0XX XXX-XX-XX</a> -->
+          <span class="theatre-btn placeholder">⏳ Додати номер</span>
+        </div>
+        <div class="theatre-phone-row">
+          <span class="theatre-label">📞 Адміністратор</span>
+          <span class="theatre-btn placeholder">⏳ Додати номер</span>
+        </div>
+      </div>
+      <div class="theatre-note">
+        <!-- Замінити на реальні дані: -->
+        📍 Адреса: вказати пізніше<br>
+        ✉️ Email: вказати пізніше
+      </div>
+    </div>
+  </div>
+
+  <div class="divider">🌟 🌟 🌟</div>
+
+  <!-- САДОЧКИ -->
+  <div class="section-header">
+    <span class="section-icon">🧸</span>
+    <div>
+      <div class="section-title" style="color:#2d8a5a;">Садочки</div>
+      <div class="section-subtitle">Заклади дошкільної освіти — натисніть 📞 для виклику</div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="search-sadky" placeholder="🔍 Пошук садочка..." oninput="filterSadky()" autocomplete="off"/>
+  </div>
+  <div class="count" id="count-sadky"></div>
+  <div class="list" id="list-sadky"></div>
+
+  <div class="divider">🌟 🌟 🌟</div>
+
+  <!-- ШКОЛИ -->
+  <div class="section-header">
+    <span class="section-icon">📚</span>
+    <div>
+      <div class="section-title" style="color:#2255aa;">Школи</div>
+      <div class="section-subtitle">Заклади загальної середньої освіти — натисніть 📞 для виклику</div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="search-shkoly" placeholder="🔍 Пошук школи..." oninput="filterShkoly()" autocomplete="off"/>
+  </div>
+  <div class="count" id="count-shkoly"></div>
+  <div class="list" id="list-shkoly"></div>
+
+  <div class="footer">
+    База закладів: <a href="https://osvita.if.ua" target="_blank">osvita.if.ua</a> — Департамент освіти та науки Івано-Франківської міської ради
+  </div>
+
+</div>
+
+<script>
+(function(){
+  const c=document.getElementById('stars');
+  const cols=['#ffb347','#ff6eb4','#a78bfa','#67e8f9','#ffd93d','#ff8fab'];
+  for(let i=0;i<30;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=Math.random()*5+3;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${cols[i%cols.length]};animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s`;
+    c.appendChild(s);
+  }
+})();
+
+const sadky=[
+  {name:'ЗДО № 1 "Калинонька"',addr:'вул. Вовчинецька, 9',phone:'0342549022'},
+  {name:'ЗДО № 2 "Малятко"',addr:'вул. Бельведерська, 49а',phone:'0342534284'},
+  {name:'ЗДО № 3 "Бджілка"',addr:'вул. Гетьмана Мазепи, 40б',phone:'0342530792'},
+  {name:'ЗДО № 4 "Калинова сопілка"',addr:'вул. Вовчинецька, 133',phone:'0342786424'},
+  {name:'ЗДО № 5 "Казка"',addr:'вул. Т.Шевченка, 102',phone:'0342750234'},
+  {name:'ЗДО № 6 "Колобок"',addr:'вул. Тарнавського, 16',phone:'0342549002'},
+  {name:'ЗДО № 7 "Золотий ключик"',addr:'вул. Т.Шевченка, 15',phone:'0342750053'},
+  {name:'ЗДО № 9 "Дзвіночок"',addr:'вул. Є.Коновальця, 135',phone:'0342533480'},
+  {name:'ЗДО № 10 "Катруся"',addr:'вул. І.Миколайчука, 5',phone:'0342786728'},
+  {name:'ЗДО № 11 "Пізнайко"',addr:'вул. Ак.Сахарова, 32а',phone:'0342522257'},
+  {name:'ЗДО № 12 "Струмочок"',addr:'вул. Довга, 4',phone:'0342547021'},
+  {name:'ЗДО № 14 "Пролісок"',addr:'вул. М.Підгірянки, 21',phone:'0342553146'},
+  {name:'ЗДО № 15 "Гуцулочка"',addr:'вул. Нова, 19',phone:'0342536258'},
+  {name:'ЗДО № 16 "Сонечко"',addr:'вул. Короля Данила, 15а',phone:'0342547037'},
+  {name:'ЗДО № 17 "Ромашка"',addr:'вул. Вовчинецька, 210',phone:'0342569878'},
+  {name:'ЗДО № 18 "Зернятко"',addr:'вул. Івана-Павла ІІ, 14',phone:'0342786425'},
+  {name:'ЗДО № 19 "Троянда"',addr:'вул. Галицька, 101а',phone:'0342546093'},
+  {name:'ЗДО № 20 "Росинка"',addr:'вул. С.Петлюри, 21',phone:'0342529012'},
+  {name:'ЗДО № 21 "Подоляночка"',addr:'вул. Г.Хоткевича, 11А',phone:null},
+  {name:'ЗДО № 22 "Світанок"',addr:'вул. Довга, 40а',phone:'0342547138'},
+  {name:'ЗДО № 23 "Дударик"',addr:'вул. В.Сухомлинського, 10а',phone:'0342753369'},
+  {name:'ЗДО № 24 "Котигорошко"',addr:'с.Крихівці, вул. Слобідівка, 25',phone:'0342535025'},
+  {name:'ЗДО № 25 "Янголятко"',addr:'с.Микитинці, вул. Просвіти, 2А',phone:null},
+  {name:'ЗДО № 26 "Барвінок"',addr:'вул. Набережна, 32а',phone:'0342545050'},
+  {name:'ЗДО № 27 "Карпатська казка"',addr:'вул. Надвірнянська, 28',phone:'0342553919'},
+  {name:'ЗДО № 28 "Квітка Карпат"',addr:'вул. Івана-Павла ІІ, 26',phone:'0342786729'},
+  {name:'ЗДО № 29 "Кобзарик"',addr:'вул. Гвардійська, 4',phone:'0342533461'},
+  {name:'ЗДО № 30 "Ластівка"',addr:'вул. Бельведерська, 57',phone:'0342750043'},
+  {name:'ЗДО № 31 "Мрія"',addr:'с.Хриплин, вул.Берегова, 4б',phone:'0342554804'},
+  {name:"ЗДО № 32 \"Солов'ятко\"",addr:'с.Угорники, вул.Тополина, 21а',phone:'0342584810'},
+  {name:'ЗДО № 33 "Кристалик"',addr:'вул. Вовчинецька, 198в',phone:'0342786723'},
+  {name:'ЗДО № 34 "Незабудка"',addr:'вул. Хіміків, 4г',phone:'0342582024'},
+  {name:'ЗДО № 35 "Вишиванка"',addr:'вул. Хіміків, 23а',phone:'0342705316'},
+  {name:'ЗДО № 36 "Віночок"',addr:'вул. Целевича, 16а',phone:'0342783900'},
+  {name:'ЗДО № 37 "Джерельце"',addr:'вул. Гетьмана Мазепи, 164, корп.12',phone:null},
+  {name:'ЗДО № 39 "Мавка"',addr:'вул. Полуботка П., 18, корп.17',phone:null},
+  {name:"Вовчинецький ЗДО № 1 \"Ластів'ятко\"",addr:'с.Вовчинець, вул.Живописна, 5а',phone:'0342786139'},
+  {name:'Черніївський КЗДО "Мрія"',addr:'с.Черніїв, вул. Стасюка, 1',phone:null},
+  {name:'Підпечерівський КЗДО "Колосок"',addr:'с.Підпечери, вул. Сагайдачного, 2',phone:null},
+  {name:'Радчанський КЗДО "Червона шапочка"',addr:'с.Радча, вул. Січових Стрільців, 5',phone:null},
+  {name:'Тисменичанський КЗДО "Їжачок"',addr:'с.Тисменичани, вул. Грушевського, 55',phone:null},
+];
+
+const shkoly=[
+  {name:'Ліцей імені Миколи Сабата',addr:'вул. Калуське шосе, 1',phone:'0342583673'},
+  {name:'Ліцей імені Романа Шухевича',addr:'вул. Шухевичів, 35',phone:'0342534211'},
+  {name:'Ліцей імені Івана Пулюя',addr:'вул. І.Франка, 33',phone:'0342533847'},
+  {name:'Ліцей № 1',addr:'вул. Довга, 37',phone:'0342547555'},
+  {name:'Ліцей № 2',addr:'вул. Гетьмана Дорошенка, 29',phone:'0342757499'},
+  {name:'Ліцей № 3',addr:'вул. І.Франка, 14',phone:'0342750558'},
+  {name:'Ліцей № 4',addr:'Південний бульвар, 24',phone:'0342546492'},
+  {name:'Ліцей № 5',addr:'вул. І.Франка, 19',phone:'0342508555'},
+  {name:'Ліцей № 6 імені Івана Ревчука',addr:'вул. Джерельна, 2а',phone:'0342759188'},
+  {name:'Ліцей № 7',addr:'вул. М.Грушевського, 16',phone:'0342750970'},
+  {name:'Початкова школа № 8',addr:'вул. Коломийська, 9',phone:'0342562966'},
+  {name:'Початкова школа № 9',addr:'вул. Гетьмана Мазепи, 169/4',phone:'0342753208'},
+  {name:'Ліцей № 10',addr:'вул. Вовчинецька, 196Б',phone:'0342564573'},
+  {name:'Ліцей № 11',addr:'вул. Б.Лепкого, 9',phone:'0342531529'},
+  {name:'Ліцей № 12 імені Івана Франка',addr:'вул. Національної гвардії, 13',phone:'0342789019'},
+  {name:'Ліцей № 13',addr:'вул. Галицька, 65 / Дністровська, 63а',phone:'0342785322'},
+  {name:'Ліцей № 15',addr:'вул. Незалежності, 207',phone:'0342533856'},
+  {name:'Ліцей № 16',addr:'вул. Вовчинецька, 103',phone:'0342560911'},
+  {name:'Ліцей № 17',addr:'вул. Набережна, 16а',phone:'0342545595'},
+  {name:'Ліцей № 18',addr:'вул. Тролейбусна, 7',phone:'0342583861'},
+  {name:'Ліцей № 19',addr:'вул. Г.Хоткевича, 56',phone:'0342755215'},
+  {name:'Ліцей № 20',addr:'вул. В.Гоголя, 10',phone:'0342565905'},
+  {name:'Ліцей № 21',addr:'вул. Ак.Сахарова, 36а',phone:'0342534859'},
+  {name:'Ліцей № 22',addr:'вул. Івана-Павла ІІ, 24',phone:'0342560644'},
+  {name:'Ліцей № 23 імені Романа Гурика',addr:'вул. Гетьмана Мазепи, 90',phone:'0342750981'},
+  {name:'Ліцей № 24',addr:'вул. Хіміків, 1',phone:'0342581955'},
+  {name:'Ліцей № 25',addr:'вул. 24 Серпня, 13',phone:'0342569646'},
+  {name:'Початкова школа № 26',addr:'вул. Шухевичів, 27а',phone:'0342531513'},
+  {name:"Ліцей імені В'ячеслава Чорновола",addr:'вул. В.Чорновола, 130',phone:'0342757891'},
+  {name:'Католицька школа святого Василія Великого',addr:'вул. Василіянок, 17',phone:'0342545335'},
+  {name:'Католицький ліцей святого Василія Великого',addr:'вул. Т.Шевченка, 11',phone:'0342752439'},
+  {name:'Навчально-реабілітаційний центр',addr:'вул. Г.Хоткевича, 52а',phone:'0342781313'},
+  {name:'Міжшкільний ресурсний центр',addr:'вул. В.Чорновола, 128',phone:'0342510071'},
+  {name:'Початкова школа "Пасічнянська"',addr:'вул. Пасічна, 3',phone:'0342580512'},
+  {name:'Початкова школа імені Софії Русової',addr:'вул. Василіянок, 28',phone:'0342548048'},
+  {name:'Вовчинецька гімназія',addr:'вул. Гайова, 10',phone:'0342561461'},
+  {name:'Крихівецький ліцей',addr:'вул. 22 Січня, 141а',phone:'0342782008'},
+  {name:'Микитинецький ліцей',addr:'вул. Просвіти, 2',phone:'0342554099'},
+  {name:'Угорницький ліцей',addr:'вул. Тополина, 22',phone:'0342787410'},
+  {name:'Хриплинська гімназія',addr:'вул. Героїв УПА, 2',phone:'0342787325'},
+  {name:'Підлузька гімназія',addr:'с.Підлужжя, вул. Шевченка, 35',phone:null},
+  {name:'Черніївський ліцей',addr:'с.Черніїв, вул. Грушевського, 7',phone:null},
+  {name:'Колодіївська гімназія',addr:'с.Колодіївка, вул. Шепаровича, 2',phone:null},
+  {name:'Підпечерівський ліцей',addr:'с.Підпечери, вул. Січових Стрільців, 8',phone:null},
+  {name:'Березівська гімназія',addr:'с.Березівка, вул. Шевченка, 23',phone:null},
+  {name:'Узинська гімназія',addr:'с.Узин, вул. Молодіжна, 14а',phone:'0342032430'},
+  {name:'Братковецький ліцей',addr:'с.Братківці, вул. Шевченка, 89а',phone:'0342033685'},
+  {name:'Драгомирчанська гімназія',addr:'с.Драгомирчани, вул. Шкільна, 14',phone:'0342041224'},
+  {name:'Радчанський ліцей',addr:'с.Радча, вул. Шевченка, 14',phone:'0342046271'},
+  {name:'Чукалівська початкова школа',addr:'с.Чукалівка, вул. Довбуша, 1',phone:null},
+  {name:'Тисменичанський ліцей',addr:'с.Тисменичани, вул. Грушевського, 53',phone:'0342060494'},
+  {name:'Каміннецька гімназія',addr:'с.Камінне, вул. Г.Мазепи, 4',phone:null},
+  {name:'Гімназія "Українська гімназія Монтессорі"',addr:'с.Крихівці, вул. Двірська, 20',phone:'0985135569'},
+  {name:'Приватний ліцей "Перша ластівка"',addr:'вул. Биха, 10',phone:'0342530302'},
+  {name:'Ліцей "IT STEP SCHOOL"',addr:'вул. Л.Гузара, 49',phone:null},
+];
+
+const mob=['050','063','066','067','068','073','091','092','093','094','095','096','097','098','099'];
+function fmt(p){if(!p)return null;return p;}
+function tel(p){if(!p)return null;return 'tel:'+p;}
+
+function render(listId,countId,data,color){
+  document.getElementById(countId).textContent='Знайдено: '+data.length+' закладів';
+  document.getElementById(listId).innerHTML=data.length?data.map(s=>`<div class="card"><div class="card-info"><div class="card-name">${s.name}</div><div class="card-addr">${s.addr}</div>${s.phone?`<div class="card-phone-text">${fmt(s.phone)}</div>`:''}</div>${s.phone?`<a class="call-btn ${color}" href="${tel(s.phone)}">📞</a>`:'<div class="no-phone">—</div>'}</div>`).join(''):'<div class="no-results">Нічого не знайдено 🔍</div>';
+}
+function filterSadky(){const q=document.getElementById('search-sadky').value.toLowerCase();render('list-sadky','count-sadky',sadky.filter(s=>s.name.toLowerCase().includes(q)||s.addr.toLowerCase().includes(q)),'green');}
+function filterShkoly(){const q=document.getElementById('search-shkoly').value.toLowerCase();render('list-shkoly','count-shkoly',shkoly.filter(s=>s.name.toLowerCase().includes(q)||s.addr.toLowerCase().includes(q)),'blue');}
+render('list-sadky','count-sadky',sadky,'green');
+render('list-shkoly','count-shkoly',shkoly,'blue');
+</script>
+</body>
+</html>
