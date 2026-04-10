@@ -9,22 +9,37 @@
       border-collapse: collapse;
       width: 600px;
     }
+    caption {
+      text-align: right;
+    }
 
     td, th {
       text-align: center;
       color: white;
-      border: 2px dotted white;
+      border: 1px dotted rgb(0, 0, 0);
+    }
+    th{
+      background-color: #00326C;
+    }
+
+    td:nth-child(1){
+      background-color: #628DB3;
+    }
+
+    tr:nth-child(2n){
+      background-color: blue;
+    }
+    tr:nth-child(2n+1){
+      background-color: #81007F;
     }
   </style>
 
 </head>
 <body>
 
-  <p align="right"><b>Заголовок таблиці</b></p>
-
   <table>
-
-    <tr bgcolor="blue">
+    <caption>Заголовок таблиці</caption>
+    <tr>
       <th>№ п/п</th>
       <th>стовпчик 1</th>
       <th>стовпчик 2</th>
@@ -32,15 +47,15 @@
       <th>стовпчик 4</th>
     </tr>
 
-    <tr bgcolor="blue">
+    <tr>
       <td>1</td>
-      <td bgcolor="purple">125</td>
+      <td>125</td>
       <td>256</td>
       <td>224</td>
       <td>878</td>
     </tr>
 
-    <tr bgcolor="purple">
+    <tr>
       <td>2</td>
       <td>245</td>
       <td>348</td>
@@ -48,15 +63,15 @@
       <td>965</td>
     </tr>
 
-    <tr bgcolor="blue">
+    <tr>
       <td>3</td>
-      <td bgcolor="purple">234</td>
+      <td>234</td>
       <td>523</td>
       <td>362</td>
       <td>213</td>
     </tr>
 
-    <tr bgcolor="purple">
+    <tr>
       <td>4</td>
       <td></td>
       <td>525</td>
@@ -64,9 +79,9 @@
       <td>452</td>
     </tr>
 
-    <tr bgcolor="blue">
+    <tr>
       <td>5</td>
-      <td bgcolor="purple"></td>
+      <td></td>
       <td>435</td>
       <td>556</td>
       <td>657</td>
