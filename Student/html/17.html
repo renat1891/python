@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Layout без Grid</title>
+  <style>
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    .box {
+      background: #d4d0c8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    header {
+      height: 60px;
+    }
+
+    .middle {
+      display: flex;
+      gap: 4px;
+      margin: 4px 0;
+      height: 200px;
+    }
+
+    .menu    {
+         width: 25%; 
+        }
+    .content {
+         flex: 1; 
+        }
+    .sidebar { 
+        width: 25%; 
+    }
+
+    footer {
+      height: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="box">Header</header>
+
+  <div class="middle">
+    <div class="box menu">Menu</div>
+    <div class="box content">Content</div>
+    <div class="box sidebar">Sidebar</div>
+  </div>
+
+  <footer class="box">Footer</footer>
+
+</body>
+</html>

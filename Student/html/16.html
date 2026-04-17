@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Семантичний макет</title>
+  <style>
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-size: 22px;
+      font-family: sans-serif;
+    }
+
+    body {
+      background: #fff;
+    }
+
+    header {
+      background: #3d52c0;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background: #8fad7a;
+      padding: 18px 0;
+      width: 45%;
+      text-align: center;
+    }
+
+    .content-row {
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    main {
+      background: #374475;
+      flex: 2.2;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .main-label {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    section {
+      background: #25d466;
+      padding: 26px;
+      text-align: center;
+    }
+
+    aside {
+      background: #3e5c7a;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    footer {
+      background: #3d52c0;
+      padding: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span>header</span>
+    <nav>nav</nav>
+  </header>
+
+  <div class="content-row">
+    <main>
+      <div class="main-label">main</div>
+      <section>section</section>
+      <section>section</section>
+      <section>section</section>
+      <section>section</section>
+      <section>section</section>
+    </main>
+    <aside>aside</aside>
+  </div>
+
+  <footer>footer</footer>
+
+</body>
+</html>
