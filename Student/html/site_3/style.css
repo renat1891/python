@@ -5,52 +5,63 @@
     padding: 0;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 
 header {
-    .up {
-        display: flex;
-        justify-content: space-between;
+    .up  {
         background-color: #313439;
-        color: #65686C;
-        padding: 8px 20px;
-        font-size: 13px;
-        gap: 12px;
-
-        .left {
+        .container{
             display: flex;
-            align-items: center;
-            gap: 16px;
+            justify-content: space-between;
+            color: #65686C;
+            padding: 8px 20px;
+            font-size: 13px;
+            gap: 12px;
+            .left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
 
-            i {
-                margin-right: 5px;
+                i {
+                    margin-right: 5px;
+                }
+            }
+
+            .right {
+                display: flex;
+                align-items: center;
+                gap: 16px;
             }
         }
 
-        .right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+        
     }
 
     .down {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-        padding: 0 40px 20px;
-        align-items: center;
-
-        .left {
-            font-size: 30px;
-        }
-
-        .right {
+        .container{
             display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 0 40px 20px;
             align-items: center;
-            gap: 20px;
-            font-size: 15px;
-            color: #464545;
+
+            .left {
+                font-size: 30px;
+            }
+
+            .right {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                font-size: 15px;
+                color: #464545;
+            }
         }
+
     }
 }
 
@@ -79,7 +90,7 @@ main {
         display: flex;
         justify-content: center;
         gap: 40px;
-        padding: 60px 40px;
+        padding: 60px 0px;
         background: white;
 
         .card {
