@@ -1,0 +1,123 @@
+
+* {
+    
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    .up {
+        display: flex;
+        justify-content: space-between;
+        background-color: #313439;
+        color: #65686C;
+        padding: 8px 20px;
+        font-size: 13px;
+        gap: 12px;
+
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+    }
+
+    .down {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding: 0 40px 20px;
+        align-items: center;
+
+        .left {
+            font-size: 30px;
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 15px;
+            color: #464545;
+        }
+    }
+}
+
+main {
+    .one {
+        background-image: url("https://www.69dropsstudio.co.uk/wp-content/uploads/2018/05/nature-photography-at-its-best.jpeg");
+        background-size: cover;
+        background-position: center;
+        padding-top: 100px;
+        padding-bottom: 100px;
+        color: white;
+        text-align: center;
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 1);
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+    }
+
+    .two {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        padding: 60px 40px;
+        background: white;
+
+        .card {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+
+            .icon {
+                width: 64px;
+                height: 64px;
+                background-color: #2196f3;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 24px;
+            }
+
+            .title {
+                font-size: 1rem;
+                color: #181717;
+            }
+
+            .text {
+                font-size: 1rem;
+                color: #696767;
+            }
+
+            .link {
+                font-size: 1rem;
+                color: #202020;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+        }
+    }
+}

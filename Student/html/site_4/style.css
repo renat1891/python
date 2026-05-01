@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #8fa8b0;
+    padding: 40px 0;
+    text-align: center;
+
+    .container {
+        margin: auto;
+        padding: 0 20px;
+
+        .title {
+            font-size: 2.5rem;
+            color: #2c4a52;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #4a6e78;
+            margin-top: 6px;
+        }
+    }
+}
+
+nav {
+    background-color: #e8541a;
+    padding: 10px 0;
+
+    .container {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+
+        .nav-item {
+            color: white;
+            font-size: 1rem;
+        }
+    }
+
+        
+
+}
