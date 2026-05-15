@@ -179,14 +179,17 @@ main {
 
             .cards {
                 display: flex;
+                justify-content: space-between;
                 flex-wrap: wrap;
 
                 .card {
                     border: 1px solid #a0a2a6;
-                    width: 33%;
+                    width: 32%;
                     height: 300px;
                     position: relative;
-                    visibility: hidden;
+                    margin-bottom: 20px;
+                    
+                    color: white;
 
                     img {
                         height: 100%;
@@ -197,15 +200,14 @@ main {
                         visibility: visible;
 
                     }
-                    
-                    &:hover{
-                        .about-project{
-                            visibility: visible;
-                            
-                        }
+                    h3, .about-project {
+                        visibility: hidden;
                     }
-
-
+                }
+            }
+            .card:hover {
+                h3, .about-project{
+                    visibility: visible;
                 }
             }
         }
