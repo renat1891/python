@@ -122,31 +122,51 @@ main .skills .container .skills-grid .skill-card:hover i {
 main .skills .container .skills-grid .skill-card:hover span {
   color: white;
 }
+main .projects {
+  background-color: #30333b;
+  padding: 60px 0;
+}
+main .projects .container h2 {
+  color: white;
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 40px;
+}
 main .projects .container .cards {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 main .projects .container .cards .card {
-  border: 1px solid #a0a2a6;
   width: 32%;
   height: 300px;
   position: relative;
   margin-bottom: 20px;
-  color: white;
+  overflow: hidden;
 }
 main .projects .container .cards .card img {
-  height: 100%;
   width: 100%;
-  z-index: -1;
-  position: absolute;
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  visibility: visible;
 }
-main .projects .container .cards .card h3, main .projects .container .cards .card .about-project {
-  visibility: hidden;
+main .projects .container .cards .card .card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
-main .projects .container .card:hover h3, main .projects .container .card:hover .about-project {
-  visibility: visible;
+main .projects .container .cards .card:hover img {
+  transform: scale(1.05);
+}
+main .projects .container .cards .card:hover .card-overlay {
+  opacity: 1;
 }/*# sourceMappingURL=style.css.map */

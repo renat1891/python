@@ -146,6 +146,7 @@ main {
                     justify-content: center;
                     gap: 12px;
                     cursor: pointer;
+                    
 
                     i {
                         font-size: 2.5em;
@@ -160,6 +161,7 @@ main {
 
                     &:hover {
                         background-color: $primary-color;
+                        
 
                         i {
                             color: white;
@@ -174,8 +176,56 @@ main {
         }
     }
 
+    // .projects {
+    //     .container {
+
+    //         .cards {
+    //             display: flex;
+    //             justify-content: space-between;
+    //             flex-wrap: wrap;
+
+    //             .card {
+    //                 border: 1px solid #a0a2a6;
+    //                 width: 32%;
+    //                 height: 300px;
+    //                 position: relative;
+    //                 margin-bottom: 20px;
+
+    //                 color: white;
+
+    //                 img {
+    //                     height: 100%;
+    //                     width: 100%;
+    //                     z-index: -1;
+    //                     position: absolute;
+    //                     object-fit: cover;
+    //                     visibility: visible;
+
+    //                 }
+    //                 h3, .about-project {
+    //                     visibility: hidden;
+    //                 }
+    //             }
+    //         }
+    //         .card:hover {
+    //             h3, .about-project{
+    //                 visibility: visible;
+    //             }
+    //         }
+    //     }
+    // }
     .projects {
+        background-color: $bg-color1;
+        padding: 60px 0;
+
         .container {
+            h2 {
+                color: white;
+                font-size: 3em;
+                text-align: center;
+                margin-bottom: 40px;
+
+            }
 
             .cards {
                 display: flex;
@@ -183,31 +233,41 @@ main {
                 flex-wrap: wrap;
 
                 .card {
-                    border: 1px solid #a0a2a6;
                     width: 32%;
                     height: 300px;
                     position: relative;
                     margin-bottom: 20px;
-                    
-                    color: white;
+                    overflow: hidden;
 
                     img {
-                        height: 100%;
                         width: 100%;
-                        z-index: -1;
-                        position: absolute;
+                        height: 100%;
                         object-fit: cover;
-                        visibility: visible;
+                        
+                    }
 
+                    .card-overlay {
+                        position: absolute;
+                        inset: 0;
+                        background: rgba(0, 0, 0, 0.6);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
+                        opacity: 0;
+                        color: white;
+                        text-align: center;
+                        padding: 20px;
                     }
-                    h3, .about-project {
-                        visibility: hidden;
+
+                    &:hover img {
+                        transform: scale(1.05);
                     }
-                }
-            }
-            .card:hover {
-                h3, .about-project{
-                    visibility: visible;
+
+                    &:hover .card-overlay {
+                        opacity: 1;
+                    }
                 }
             }
         }
